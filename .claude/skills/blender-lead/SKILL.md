@@ -31,6 +31,7 @@ description: Blender 3D 美术团队的【美术总监 / Lead】。接到建模�
 3. **证据只认文件**：面数报告、截图、导出文件、`blender_check.py` 的 `failed = 0`。员工说"做好了"不算。
 4. Blender 未连接就不开工：先确认 MCP 可用（`get_addon_status` / `execute_blender_code`）；连不上就停下报告。
 5. 两轮不过升级老板，写清缺项、责任员工、复检方式。
+6. **Blender 工具是串行的**：addon 只有一条 socket，命令逐条排队。不要并行发 Blender 调用；一条长 `execute_code` 会挡住后面所有调用（实测建城脚本跑 82 秒，期间第二个调用一直排队，看起来像卡死）。长脚本要切块，每块跑完立刻报进度。
 
 ## 派活模板
 ```
